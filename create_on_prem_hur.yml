@@ -1,0 +1,49 @@
+---
+####################################################################
+# Example :  Hitachi Universal Replicator (HUR) Playbook
+####################################################################
+- name: HUR
+  hosts: localhost
+  gather_facts: false
+  collections:
+    - hitachivantara.vspone_block.vsp
+  vars_files:
+    - ansible_vault_storage_var.yml
+  vars:
+    # Common connection info for all tasks
+    connection_info:
+      address: "{{ storage_address }}"
+      username: "{{ vault_storage_username }}"
+      password: "{{ vault_storage_secret }}"
+    secondary_connection_info:
+      address: "{{ secondary_storage_address }}"
+      username: "{{ vault_secondary_storage_username }}"
+      password: "{{ vault_secondary_storage_secret }}"
+      
+  tasks:
+  - name: Create a HUR pair in new copy group
+    hitachivantara.vspone_block.vsp.hv_hur:
+      state: "present"
+      connection_info:
+        address: storage1.company.com
+        username: "admin"
+        password: "secret"
+      secondary_connection_info:
+        address: storage2.company.com
+        username: "admin"
+        password: "secret"
+      spec:
+        copy_group_name: hur_copy_group_name_1
+        copy_pair_name: hur_copy_pair_name_1
+        primary_volume_id: 234
+        secondary_pool_id: 0
+        primary_volume_journal_id: 11
+        secondary_volume_journal_id: 12
+        local_device_group_name: hur_copy_group_name_1P_
+        remote_device_group_name: hur_copy_group_name_1S_
+        consistency_group_id: 0
+        secondary_hostgroup:
+          name: hg_1
+          port: CL1-A
+          lun_id: 5
+        mirror_unit_id: 0

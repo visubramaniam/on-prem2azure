@@ -1,0 +1,11 @@
+{
+    "ansible.python.interpreterPath": "/opt/homebrew/bin/python3",
+    "ansible.ansible.path": "/opt/homebrew/bin/ansible",
+    "ansible.ansibleNavigator.path": "/opt/homebrew/bin/ansible-navigator",
+    "ansible.validation.lint.path": "/opt/homebrew/bin/ansible-lint",
+    "ansible.executionEnvironment.enabled": true,
+    "ansible.executionEnvironment.containerEngine": "podman",
+    "ansible.executionEnvironment.pull.arguments": "--tls-verify=false",
+    "ansible.executionEnvironment.pull.policy": "always",
+    "ansible.lightspeed.enabled": false
+}
