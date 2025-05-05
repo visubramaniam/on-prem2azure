@@ -24,26 +24,26 @@
   - name: Create a HUR pair in new copy group
     hitachivantara.vspone_block.vsp.hv_hur:
       state: "present"
-      connection_info:
-        address: storage1.company.com
-        username: "admin"
-        password: "secret"
-      secondary_connection_info:
-        address: storage2.company.com
-        username: "admin"
-        password: "secret"
+      connection_info: "{{ connection_info }}"
+      secondary_connection_info: "{{ secondary_connection_info }}"
       spec:
-        copy_group_name: hur_copy_group_name_1
-        copy_pair_name: hur_copy_pair_name_1
-        primary_volume_id: 234
-        secondary_pool_id: 0
-        primary_volume_journal_id: 11
-        secondary_volume_journal_id: 12
-        local_device_group_name: hur_copy_group_name_1P_
-        remote_device_group_name: hur_copy_group_name_1S_
-        consistency_group_id: 0
+        copy_group_name: "Production"
+        copy_pair_name: "Production_1"
+        primary_volume_id: 8192
+        secondary_pool_id: 1
+        primary_volume_journal_id: 40
+        secondary_volume_journal_id: 40
+        local_device_group_name: "Production_PVOL"
+        remote_device_group_name: "Production_SVOL"
+        consistency_group_id: 40
         secondary_hostgroup:
-          name: hg_1
-          port: CL1-A
-          lun_id: 5
+            name: "mySQL-HUR-Ansible"
+            port: "CL1-A"
+            lun_id: 0
         mirror_unit_id: 0
+        is_data_reduction_force_copy: false
+        path_group_id: 5
+    register: result
+  - name: Debug the result variable
+    ansible.builtin.debug:
+        var: result
