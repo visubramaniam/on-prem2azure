@@ -37,7 +37,7 @@
         remote_device_group_name: "{{ remote_device_group_name }}"
         consistency_group_id: "{{ consistency_group_id }}"
         secondary_iscsi_targets:
-            name: "{{ target_name }}"
+          - name: "{{ target_name }}"
             port: "{{ port1_name }}"
             lun_id: "{{ lun_id }}"
         mirror_unit_id: "{{ mirror_unit_id }}"
