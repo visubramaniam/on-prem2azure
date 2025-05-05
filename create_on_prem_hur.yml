@@ -42,7 +42,7 @@
             lun_id: 0
         mirror_unit_id: 0
         is_data_reduction_force_copy: false
-        path_group_id: 5
+        path_group_id: 0
     register: result
   - name: Debug the result variable
     ansible.builtin.debug:
