@@ -12,7 +12,7 @@
   vars:
     # Common connection info for all tasks
     connection_info:
-      address: "{{ secondary_storage_addressstorage_address }}"
+      address: "{{ secondary_storage_address }}"
       username: "{{ vault_secondary_storage_username }}"
       password: "{{ vault_secondary_storage_secret }}"
 
