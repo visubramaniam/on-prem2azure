@@ -30,6 +30,7 @@
         copy_group_name: "{{ copy_group_name }}"
         copy_pair_name: "{{ copy_pair_name }}"
         primary_volume_id: "{{ pvol_id }}"
+        secondary_volume_id: "{{ svol_id }}"
         secondary_pool_id: "{{ secondary_pool_id }}"
         primary_volume_journal_id: "{{ pvol_jnl_id }}"
         secondary_volume_journal_id: "{{ svol_jnl_id }}"
