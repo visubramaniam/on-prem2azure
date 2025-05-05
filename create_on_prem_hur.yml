@@ -32,9 +32,11 @@
         primary_volume_id: "{{ pvol_id }}"
         primary_volume_journal_id: "{{ pvol_jnl_id }}"
         secondary_volume_journal_id: "{{ svol_jnl_id }}"
+        secondary_pool_id: "{{ secondary_pool_id }}"
         local_device_group_name: "{{ local_device_group_name }}"
         remote_device_group_name: "{{ remote_device_group_name }}"
-        consistency_group_id: "{{ consistency_group_id }}"
+        allocate_new_consistency_group: true
+        secondary_storage_serial_number: "{{ secondary_storage_serial }}"
         secondary_iscsi_targets:
           - name: "{{ target_name }}"
             port: "{{ port1_name }}"
