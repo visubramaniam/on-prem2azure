@@ -29,16 +29,16 @@
       spec:
         copy_group_name: "Production"
         copy_pair_name: "Production_1"
-        primary_volume_id: 8192
+        primary_volume_id: 952
         secondary_pool_id: 1
         primary_volume_journal_id: 40
         secondary_volume_journal_id: 40
         local_device_group_name: "Production_PVOL"
         remote_device_group_name: "Production_SVOL"
         consistency_group_id: 40
-        secondary_hostgroup:
-            name: "mySQL-HUR-Ansible"
-            port: "CL1-A"
+        secondary_iscsi_targets:
+            name: "mySQL-HUR-ansible"
+            port: "CL1-D"
             lun_id: 0
         mirror_unit_id: 0
         is_data_reduction_force_copy: false

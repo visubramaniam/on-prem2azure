@@ -1,0 +1,53 @@
+---
+####################################################################
+# Example : iSCSI Target Playbook
+####################################################################
+- name: ISCSI Target Module
+  hosts: localhost
+  gather_facts: false
+
+  vars_files:
+    - ansible_vault_storage_var.yml
+
+  vars:
+    # Common connection info for all tasks
+    connection_info:
+      address: "{{ secondary_storage_addressstorage_address }}"
+      username: "{{ vault_secondary_storage_username }}"
+      password: "{{ vault_secondary_storage_secret }}"
+
+  tasks:
+    ####################################################################
+    # Task 1 : Create iscsi target - "CL1-D"
+    ####################################################################
+    - name: Create iscsi target
+      hitachivantara.vspone_block.vsp.hv_iscsi_target:
+        connection_info: "{{ connection_info }}"
+        state: "present"
+        spec:
+          name: "mySQL-HUR-ansible"
+          port: "CL1-D"
+          iqn_initiators:
+            - "iqn.1993-08.org.debian.iscsi:01:107dc7e4254a"
+      register: result
+
+    - name: Debug the result variable
+      ansible.builtin.debug:
+        var: result
+    ####################################################################
+    # Task 2  : Create iscsi target - "CL2-D"
+    ####################################################################
+    - name: Create iscsi target
+      hitachivantara.vspone_block.vsp.hv_iscsi_target:
+        connection_info: "{{ connection_info }}"
+        state: "present"
+        spec:
+          name: "mySQL-HUR-ansible"
+          port: "CL2-D"
+          iqn_initiators:
+            - "iqn.1993-08.org.debian.iscsi:01:107dc7e4254b"
+      register: result
+
+    - name: Debug the result variable
+      ansible.builtin.debug:
+        var: result
