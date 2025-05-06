@@ -34,8 +34,7 @@
       ansible.builtin.debug:
         msg: "{{ job_id.stdout }}"
 
-    - name: Set job_id_out for workflow
-      ansible.builtin.set_fact
+    - ansible.builtin.set_fact:
         job_id_out: "{{ job_id.stdout.strip() }}"
 
     - name: Get Journal Volume ID
@@ -54,8 +53,7 @@
       ansible.builtin.debug:
         msg: "{{ volume_id.stdout.strip() }}"
 
-    - name: Set volume_id_out for workflow
-      ansible.builtin.set_fact:
+    - ansible.builtin.set_fact:
         volume_id_out: "{{ volume_id.stdout.strip() }}"
 
     - name: Check if journal creation file exists
