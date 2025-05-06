@@ -13,7 +13,7 @@
     # Common connection info for all tasks
     connection_info:
       address: "{{ cloud_storage_address }}"
-      username: "{{ cloud_vault_storage_username:vault_storage_username }}"
+      username: "{{ cloud_vault_storage_username }}"
       password: "{{ cloud_vault_storage_secret}}"
   tasks:
     ####################################################################

@@ -37,3 +37,11 @@
           primary_volume_device_group_name: "{{ si_pvol_dev_grp_name }}"
           secondary_volume_device_group_name: "{{ si_svol_dev_grp_name }}"
       register: result
+    - name: Debug the result variable
+      ansible.builtin.debug:
+        var: result
+    - name: Set si_svol_id for workflow
+      set_stats:
+        data:
+          si_svol_id: "{{ result.data.secondary_volume_id }}"
+      
