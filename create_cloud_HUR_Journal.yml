@@ -38,7 +38,7 @@
               --user "{{ cloud_vault_storage_username }}" \
               --password "{{ cloud_vault_storage_secret }}" \
               job_list \
-              --ids "{{ job_id }}" |\
+              --ids "{{ job_id.stdout.strip() }}" |\
               grep -i value | tr -d " " | cut -d":" -f2 | tr -d "\n"
       register: volume_id
     - name: Echo volume_id
@@ -58,7 +58,7 @@
               --user "{{ cloud_vault_storage_username }}" \
               --password "{{ cloud_vault_storage_secret }}" \
               journal_create \
-              --volume_ids "{{ volume_id }}" \
+              --volume_ids "{{ volume_id.stdout.strip() }}" \
               --journal_number "{{ cloud_journal_number }}"
       when: not journal_file.stat.exists
       register: command_output
