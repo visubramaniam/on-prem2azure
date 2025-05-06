@@ -28,7 +28,7 @@
 
     - name: Echo job_id
       ansible.builtin.debug:
-        msg: "{{ job_id.stdout.strip() }}"
+        msg: "{{ job_id.stdout }}"
 
     - name: Set job_id_out for workflow
       ansible.builtin.set_stats:
@@ -63,15 +63,15 @@
 
     - name: Create Journal
       ansible.builtin.shell: |
-            set -o pipefail
-            hsds --ignore_certificate_errors \
-              --host "{{ cloud_storage_address }}" \
-              --user "{{ cloud_vault_storage_username }}" \
-              --password "{{ cloud_vault_storage_secret }}" \
-              journal_create \
-              --volume_ids "{{ volume_id_out }}" \
-              --journal_number "{{ cloud_journal_number }}"
-      when: not journal_file.stat.exists
+        set -o pipefail
+        hsds --ignore_certificate_errors \
+          --host "{{ cloud_storage_address }}" \
+          --user "{{ cloud_vault_storage_username }}" \
+          --password "{{ cloud_vault_storage_secret }}" \
+          journal_create \
+          --volume_ids "{{ volume_id_out }}" \
+          --journal_number "{{ cloud_journal_number }}"
+      when: not journal_created.stat.exists
       register: command_output
       args:
         creates: /tmp/journal_created
