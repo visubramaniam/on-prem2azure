@@ -83,6 +83,3 @@
     - name: Echo command output
       ansible.builtin.debug:
         msg: "{{ command_output.stdout.strip() }}"
-
-
-    
