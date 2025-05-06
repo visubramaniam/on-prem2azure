@@ -1,0 +1,34 @@
+####################################################################
+# Example : Volume Playbook
+####################################################################
+- name: Volume Module
+  hosts: localhost
+  gather_facts: false
+
+  vars_files:
+    - ansible_vault_storage_var.yml
+
+  vars:
+    # Common connection info for all tasks
+    connection_info:
+      address: "{{ cloud_storage_address }}"
+      username: "{{ cloud_vault_storage_username:vault_storage_username }}"
+      password: "{{ cloud_vault_storage_secret}}"
+  tasks:
+    ####################################################################
+    # Task 1 : Create volume
+    ####################################################################
+    - name: Create and attach volume
+      hitachivantara.vspone_block.sds_block.hv_sds_block_volume:
+        connection_info: "{{ connection_info }}"
+        state: "present"
+        spec:
+          name: "mySQL-HUR-ansibl"
+          capacity: "100GB"
+          pool_name: "StoragePool01"
+          capacity_saving: "Compression"
+          compute_nodes: ["mysql-hur"]
+      register: result
+    - name: Debug the result variable
+      ansible.builtin.debug:
+        var: result
