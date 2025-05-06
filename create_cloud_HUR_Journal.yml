@@ -21,7 +21,7 @@
               --storage_controller_id "{{ storage_controller_id }}" \
               --capacity 102400 \
               --pool_id_name "{{ cloud_pool_name }}" | \
-              grep -i job_id | tr -d " " | cut -d":" -f2 | tr -d "\n"
+              grep -i "^Job" | tr -d " " | cut -d":" -f2 | tr -d "\n"
       when: not journal_volume_file.stat.exists
       register: job_id
       args:
@@ -59,7 +59,7 @@
               --password "{{ cloud_vault_storage_secret }}" \
               journal_create \
               --volume_ids "{{ volume_id }}" \
-              --journal_number "{{ journal_number }}"
+              --journal_number "{{ cloud_journal_number }}"
       when: not journal_file.stat.exists
       register: command_output
       args:
