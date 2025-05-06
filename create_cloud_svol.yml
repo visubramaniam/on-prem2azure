@@ -24,11 +24,11 @@
         connection_info: "{{ connection_info }}"
         state: "present"
         spec:
-          name: "mySQL-HUR-ansibl"
-          capacity: "100GB"
-          pool_name: "StoragePool01"
+          name: "{{ cloud_vol_name }}"
+          capacity: "{{ cloud_vol_capacity }}"
+          pool_name: "{{ cloud_pool_name }}"
           capacity_saving: "Compression"
-          compute_nodes: ["mysql-hur"]
+          compute_nodes: ["{{ cloud_compute_node_name }}"]
       register: result
     - name: Debug the result variable
       ansible.builtin.debug:
