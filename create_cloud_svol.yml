@@ -27,7 +27,7 @@
           name: "{{ cloud_vol_name }}"
           capacity: "{{ cloud_vol_capacity }}"
           pool_name: "{{ cloud_pool_name }}"
-          capacity_saving: "None"
+          capacity_saving: "Disabled"
           compute_nodes: ["{{ cloud_compute_node_name }}"]
       register: result
     - name: Debug the result variable
