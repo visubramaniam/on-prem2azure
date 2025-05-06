@@ -33,3 +33,12 @@
     - name: Debug the result variable
       ansible.builtin.debug:
         var: result
+    - name: Set Volume Number for workflow
+      set_stats:
+        data:
+          cloud_svol_id: "{{ result.data.volume_number }}"
+    - name: Set Storage Controller ID for workflow
+      set_stats:
+        data:
+          storage_controller_id: "{{ result.data.storage_controller_id }}"
+    
