@@ -45,7 +45,8 @@
           --user "{{ cloud_vault_storage_username }}" \
           --password "{{ cloud_vault_storage_secret }}" \
           job_list \
-          --ids "{{ job_id_out }}"
+          --ids "{{ job_id_out }}" |\
+          grep "Value" | tr -d " " | cut -d":" -f2 | tr -d "\n"
       register: volume_id
 
     - name: Echo volume_id
