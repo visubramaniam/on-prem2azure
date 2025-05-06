@@ -31,7 +31,7 @@
           consistency_group_id: 7
           copy_pace_track_size: "MEDIUM"
           enable_quick_mode: false
-          auto_split: true
+          auto_split: false
           copy_group_name: "{{si_cp_grp_name}}"
           copy_pair_name: "{{ si_cp_pair_name }}"
           primary_volume_device_group_name: "{{ si_pvol_dev_grp_name }}"
