@@ -30,6 +30,12 @@
         (ret.stderr != '') or
         (ret.rc != 0)
       when: horcm101_file.stat.exists
+    - name: Login to the storage system
+      ansible.builtin.shell: "/HORCM/usr/bin/raidcom -login -u ansible -p Remote01"
+      register: ret
+      failed_when: >
+        (ret.stderr != '') or
+        (ret.rc != 0)
     - name: Create cloud HUR PAIR
       ansible.builtin.shell: "/HORCM/usr/bin/paircreate -g TCDEMO -f async 10 -jp 10 -js 10 -vl -I100"
       register: ret
