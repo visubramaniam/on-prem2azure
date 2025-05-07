@@ -1,0 +1,38 @@
+---
+####################################################################
+# Example : Cloud HUR Journal Creation
+####################################################################
+- name: Create Cloud HUR Journal
+  hosts: localhost
+  vars_files:
+    - ansible_vault_storage_var.yml
+  tasks:
+    - name: Check if horcm100 file exists
+      ansible.builtin.stat:
+        path: /etc/horcm100.conf
+      register: horcm100_file
+    - name: Check if horcm101 file exists
+      ansible.builtin.stat:
+        path: /etc/horcm101.conf
+      register: horcm101_file
+    - name: Start horcm100
+      ansible.builtin.shell: ""/HORCM/usr/bin/horcmstart.sh 100"
+      register: ret
+      failed_when: >
+        ("Failed" in ret.stdout) or
+        (ret.stderr != '') or
+        (ret.rc != 0)
+      when: horcm100_file.stat.exists
+    - name: Start horcm101
+      ansible.builtin.shell: ""/HORCM/usr/bin/horcmstart.sh 101"
+      register: ret
+      failed_when: >
+        (ret.stderr != '') or
+        (ret.rc != 0)
+      when: horcm101_file.stat.exists
+    - name: Create cloud HUR PAIR
+      ansible.builtin.shell: "/HORCM/usr/bin/paircreate -g TCDEMO -f async 10 -jp 10 -js 10 -vl -I100"
+      register: ret
+      failed_when: >
+        (ret.stderr != '') or
+        (ret.rc != 0)
