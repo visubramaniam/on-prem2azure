@@ -39,7 +39,7 @@
 
     - name: Pause for 3 minutes to allow job to complete
       ansible.builtin.pause:
-        minutes: 3
+        minutes: 5
   
     - name: Get Journal Volume ID
       ansible.builtin.shell: |
