@@ -16,7 +16,7 @@
         path: /etc/horcm101.conf
       register: horcm101_file
     - name: Start horcm100
-      ansible.builtin.shell: ""/HORCM/usr/bin/horcmstart.sh 100"
+      ansible.builtin.shell: "/HORCM/usr/bin/horcmstart.sh 100"
       register: ret
       failed_when: >
         ("Failed" in ret.stdout) or
@@ -24,7 +24,7 @@
         (ret.rc != 0)
       when: horcm100_file.stat.exists
     - name: Start horcm101
-      ansible.builtin.shell: ""/HORCM/usr/bin/horcmstart.sh 101"
+      ansible.builtin.shell: "/HORCM/usr/bin/horcmstart.sh 101"
       register: ret
       failed_when: >
         (ret.stderr != '') or
