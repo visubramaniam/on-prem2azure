@@ -31,7 +31,7 @@
         (ret.rc != 0)
       when: horcm101_file.stat.exists
     - name: Login to the storage system
-      ansible.builtin.shell: "/HORCM/usr/bin/raidcom -login -u ansible -p Remote01"
+      ansible.builtin.shell: "/HORCM/usr/bin/raidcom -login ansible Remote01"
       register: ret
       failed_when: >
         (ret.stderr != '') or
