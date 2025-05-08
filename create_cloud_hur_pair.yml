@@ -23,7 +23,7 @@
         (ret.stderr != '') or
         (ret.rc != 0)
       when: horcm100_file.stat.exists
-      until: ret == 0
+      until: ret.rc == 0
       retries: 10
       delay: 30
     - name: Start horcm101
@@ -33,7 +33,7 @@
         (ret.stderr != '') or
         (ret.rc != 0)
       when: horcm101_file.stat.exists
-      until: ret == 0
+      until: ret.rc == 0
       retries: 10
       delay: 30
     - name: Login to the storage system
