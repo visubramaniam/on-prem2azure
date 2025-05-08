@@ -23,6 +23,9 @@
         (ret.stderr != '') or
         (ret.rc != 0)
       when: horcm100_file.stat.exists
+      until: ret == 0
+      retries: 10
+      delay: 30
     - name: Start horcm101
       ansible.builtin.shell: "/HORCM/usr/bin/horcmstart.sh 101"
       register: ret
@@ -30,6 +33,9 @@
         (ret.stderr != '') or
         (ret.rc != 0)
       when: horcm101_file.stat.exists
+      until: ret == 0
+      retries: 10
+      delay: 30
     - name: Login to the storage system
       ansible.builtin.shell: "/HORCM/usr/bin/raidcom -login ansible Remote01 -I100"
       register: ret

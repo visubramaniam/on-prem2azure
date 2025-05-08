@@ -37,10 +37,6 @@
     - ansible.builtin.set_fact:
         job_id_out: "{{ job_id.stdout.strip() }}"
 
-    - name: Pause for 3 minutes to allow job to complete
-      ansible.builtin.pause:
-        minutes: 5
-  
     - name: Get Journal Volume ID
       ansible.builtin.shell: |
         set -o pipefail
@@ -52,7 +48,9 @@
           --ids "{{ job_id_out }}" |\
           grep "Value" | tr -d " " | cut -d":" -f2 | tr -d "\n"
       register: volume_id
-
+      until: volume_id.rc == 0
+      retries: 10
+      delay: 30
     - name: Echo volume_id
       ansible.builtin.debug:
         msg: "{{ volume_id.stdout.strip() }}"
