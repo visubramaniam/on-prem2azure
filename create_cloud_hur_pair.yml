@@ -48,4 +48,3 @@
       failed_when: >
         (ret.stderr != '') or
         (ret.rc != 0)
-        
