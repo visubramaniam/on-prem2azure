@@ -48,3 +48,15 @@
       failed_when: >
         (ret.stderr != '') or
         (ret.rc != 0)
+    - name: Wait for the pair creation to complete 
+      ansible.builtin.shell: "/HORCM/usr/bin/pairevtwait -g TCDEMO -s pair -t 3600 -I100"
+      register: ret
+      failed_when: >
+        (ret.stderr != '') or
+        (ret.rc != 0)
+    - name: Wait for the pair creation to completet HUR PAIR 
+      ansible.builtin.shell: "/HORCM/usr/bin/pairsplit -g TCDEMO -rw -I100"
+      register: ret
+      failed_when: >
+        (ret.stderr != '') or
+        (ret.rc != 0)
