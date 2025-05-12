@@ -92,6 +92,7 @@
         src: /etc/horcm101.conf.j2
         dest: /tmp/horcm101.conf
         mode: '0777'
+  
     - name: Debug horcm100 configuration file
       ansible.builtin.debug:
         var: lookup('ansible.builtin.file', '/tmp/horcm100.conf')
@@ -104,6 +105,7 @@
       ansible.builtin.shell: |
         export HORCM_CONF=/tmp/horcm100.conf
         /HORCM/usr/bin/horcmstart.sh 100
+        cat /HORCM/log100/curlog/horcm_*.log
       register: ret
       failed_when: >
         ("Failed" in ret.stdout) or
