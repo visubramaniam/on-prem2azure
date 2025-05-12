@@ -127,28 +127,28 @@
       delay: 30
 
     - name: Login to the storage system
-      ansible.builtin.shell: "/HORCM/usr/bin/raidcom -login ansible Remote01 -I100"
+      ansible.builtin.shell: "/opt/HORCM/usr/bin/raidcom -login ansible Remote01 -I100"
       register: ret
       failed_when: >
         (ret.stderr != '') or
         (ret.rc != 0)
 
     - name: Create cloud HUR PAIR
-      ansible.builtin.shell: "/HORCM/usr/bin/paircreate -g TCDEMO -f async 10 -jp 10 -js 10 -vl -I100"
+      ansible.builtin.shell: "/opt/HORCM/usr/bin/paircreate -g TCDEMO -f async 10 -jp 10 -js 10 -vl -I100"
       register: ret
       failed_when: >
         (ret.stderr != '') or
         (ret.rc != 0)
 
     - name: Wait for the pair creation to complete 
-      ansible.builtin.shell: "/HORCM/usr/bin/pairevtwait -g TCDEMO -s pair -t 3600 -I100"
+      ansible.builtin.shell: "/opt/HORCM/usr/bin/pairevtwait -g TCDEMO -s pair -t 3600 -I100"
       register: ret
       failed_when: >
         (ret.stderr != '') or
         (ret.rc != 0)
 
     - name: Wait for the pair creation to completet HUR PAIR 
-      ansible.builtin.shell: "/HORCM/usr/bin/pairsplit -g TCDEMO -rw -I100"
+      ansible.builtin.shell: "/opt/HORCM/usr/bin/pairsplit -g TCDEMO -rw -I100"
       register: ret
       failed_when: >
         (ret.stderr != '') or
