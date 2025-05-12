@@ -73,37 +73,37 @@
 
     - name: Check if horcm100 file exists
       ansible.builtin.stat:
-        path: /etc/horcm100.conf.j2
+        path: /tmp/horcm100.conf.j2
       register: horcm100_file
 
     - name: Check if horcm101 file exists
       ansible.builtin.stat:
-        path: /etc/horcm101.conf.j2
+        path: /tmp/horcm101.conf.j2
       register: horcm101_file
 
     - name: Modify horcm100.conf.tmpl
       ansible.builtin.template:
-        src: /etc/horcm100.conf.j2
-        dest: /HORCM/etc/horcm100.conf
+        src: /tmp/horcm100.conf.j2
+        dest: /opt/HORCM/etc/horcm100.conf
         mode: '0777'
 
     - name: Modify horcm101.conf.tmpl
       ansible.builtin.template:
-        src: /etc/horcm101.conf.j2
-        dest: /HORCM/etc/horcm101.conf
+        src: /tmp/horcm101.conf.j2
+        dest: /opt/HORCM/etc/horcm101.conf
         mode: '0777'
   
     - name: Debug horcm100 configuration file
       ansible.builtin.debug:
-        var: lookup('ansible.builtin.file', '/HORCM/etc/horcm100.conf')
+        var: lookup('ansible.builtin.file', '/opt/HORCM/etc/horcm100.conf')
 
     - name: Debug horcm101 configuration file
       ansible.builtin.debug:
-        var: lookup('ansible.builtin.file', '/HORCM/etc/horcm101.conf')
+        var: lookup('ansible.builtin.file', '/opt/HORCM/etc/horcm101.conf')
 
     - name: Start horcm100
       ansible.builtin.shell: |
-        HORCM_CONF="/HORCM/etc/horcm100.conf" /HORCM/usr/bin/horcmstart.sh
+        /opt/HORCM/usr/bin/horcmstart.sh 100
       register: ret
       failed_when: >
         ("Failed" in ret.stdout) or
@@ -116,7 +116,7 @@
 
     - name: Start horcm101
       ansible.builtin.shell: |
-        HORCM_CONF="/HORCM/etc/horcm101.conf" /HORCM/usr/bin/horcmstart.sh
+        /opt/HORCM/usr/bin/horcmstart.sh 101
       register: ret
       failed_when: >
         (ret.stderr != '') or
