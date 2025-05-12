@@ -127,9 +127,9 @@
       delay: 30
 
     - name: Login to the storage system
-      ansible.builtin.shell: |
+      ansible.builtin.cmd: |
         /opt/HORCM/usr/bin/raidcom -login "{{ vault_storage_username }}" "{{ vault_storage_secret }}" -I100
-      register: ret
+
 
     - name: Create cloud HUR PAIR
       ansible.builtin.shell: "/opt/HORCM/usr/bin/paircreate -g TCDEMO -f async 10 -jp 10 -js 10 -vl -I100"
