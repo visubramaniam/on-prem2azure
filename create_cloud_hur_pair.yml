@@ -103,8 +103,8 @@
 
     - name: Start horcm100
       ansible.builtin.shell: |
-        export HORCM_CONF=/tmp/horcm100.conf
-        /HORCM/usr/bin/horcmstart.sh 100
+        export HORCM_CONF=/tmp/horcm100.conf; \
+        /HORCM/usr/bin/horcmstart.sh 100; \
         cat /HORCM/log100/curlog/horcm_*.log
       register: ret
       failed_when: >
@@ -118,7 +118,7 @@
 
     - name: Start horcm101
       ansible.builtin.shell: |
-        export HORCM_CONF=/tmp/horcm101.conf
+        export HORCM_CONF=/tmp/horcm101.conf; \
         /HORCM/usr/bin/horcmstart.sh 101
       register: ret
       failed_when: >
