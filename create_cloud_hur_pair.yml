@@ -92,7 +92,7 @@
         mode: '0777'
 
     - name: Start horcm100
-      ansible.builtin.shell: "export HORCM_CONF='/tmp'; /HORCM/usr/bin/horcmstart.sh 100"
+      ansible.builtin.shell: "export HORCM_CONF='/tmp/horcm100.conf'; /HORCM/usr/bin/horcmstart.sh 100"
       register: ret
       failed_when: >
         ("Failed" in ret.stdout) or
@@ -104,7 +104,7 @@
       delay: 30
 
     - name: Start horcm101
-      ansible.builtin.shell: "export HORCM_CONF='/tmp'; /HORCM/usr/bin/horcmstart.sh 101"
+      ansible.builtin.shell: "export HORCM_CONF='/tmp/horcm101.conf'; /HORCM/usr/bin/horcmstart.sh 101"
       register: ret
       failed_when: >
         (ret.stderr != '') or
