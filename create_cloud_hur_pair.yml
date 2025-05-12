@@ -104,7 +104,6 @@
     - name: Start horcm100
       ansible.builtin.shell: |
         HORCM_CONF="/HORCM/etc/horcm100.conf" /HORCM/usr/bin/horcmstart.sh
-        cat /HORCM/log100/curlog/horcm_*.log
       register: ret
       failed_when: >
         ("Failed" in ret.stdout) or
@@ -118,7 +117,6 @@
     - name: Start horcm101
       ansible.builtin.shell: |
         HORCM_CONF="/HORCM/etc/horcm101.conf" /HORCM/usr/bin/horcmstart.sh
-        cat /HORCM/log100/curlog/horcm_*.log
       register: ret
       failed_when: >
         (ret.stderr != '') or
