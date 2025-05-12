@@ -7,14 +7,46 @@
   vars_files:
     - ansible_vault_storage_var.yml
   tasks:
+    - name: Get HORCM UDP Port for Cloud Command Device
+      ansible.builtin.shell: |
+        set -o pipefail
+        hsds --ignore_certificate_errors \
+          --host "{{ cloud_storage_address }}" \
+          --user "{{ cloud_vault_storage_username }}" \
+          --password "{{ cloud_vault_storage_secret }}" \
+          storage_controller_show \
+          --ids "{{ storage_controller_id }}" |\
+          grep "^Udp" | tr -d " " | cut -d":" -f2 | tr -d "\n"
+      register: udp_port
+      failed when: udp_port.rc != 0
+
+    - name: Get Path Group ID for HORCM config file
+      ansible.builtin.shell: |
+        set -o pipefail
+        hsds --ignore_certificate_errors \
+          --host "{{ cloud_storage_address }}" \
+          --user "{{ cloud_vault_storage_username }}" \
+          --password "{{ cloud_vault_storage_secret }}" \
+          remotepath_group_list \
+          ----local_storage_controller_id "{{ storage_controller_id }}" |\
+          grep "^Path" | tr -d " " | cut -d":" -f2 | tr -d "\n"
+      register: path_grp_id
+      failed when: path_grp_id.rc != 0
+
     - name: Check if horcm100 file exists
       ansible.builtin.stat:
         path: /etc/horcm100.conf
       register: horcm100_file
+
     - name: Check if horcm101 file exists
       ansible.builtin.stat:
         path: /etc/horcm101.conf
       register: horcm101_file
+
+    - name: Modify horcm100.conf.tmpl
+
+    - name: Modify horcm101.conf.tmpl
+
     - name: Start horcm100
       ansible.builtin.shell: "/HORCM/usr/bin/horcmstart.sh 100"
       register: ret
