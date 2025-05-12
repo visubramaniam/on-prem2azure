@@ -79,16 +79,12 @@
       ansible.builtin.template:
         src: /etc/horcm100.conf.j2
         dest: /tmp/horcm100.conf
-        owner: root
-        group: root
         mode: '0777'
 
     - name: Modify horcm101.conf.tmpl
       ansible.builtin.template:
         src: /etc/horcm101.conf.j2
         dest: /tmp/horcm101.conf
-        owner: root
-        group: root
         mode: '0777'
 
     - name: Start horcm100
