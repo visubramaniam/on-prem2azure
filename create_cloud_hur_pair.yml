@@ -84,28 +84,27 @@
     - name: Modify horcm100.conf.tmpl
       ansible.builtin.template:
         src: /etc/horcm100.conf.j2
-        dest: /tmp/horcm100.conf
+        dest: /HORCM/etc/horcm100.conf
         mode: '0777'
 
     - name: Modify horcm101.conf.tmpl
       ansible.builtin.template:
         src: /etc/horcm101.conf.j2
-        dest: /tmp/horcm101.conf
+        dest: /HORCM/etc/horcm101.conf
         mode: '0777'
   
     - name: Debug horcm100 configuration file
       ansible.builtin.debug:
-        var: lookup('ansible.builtin.file', '/tmp/horcm100.conf')
+        var: lookup('ansible.builtin.file', '/HORCM/etc/horcm100.conf')
 
     - name: Debug horcm101 configuration file
       ansible.builtin.debug:
-        var: lookup('ansible.builtin.file', '/tmp/horcm101.conf')
+        var: lookup('ansible.builtin.file', '/HORCM/etc/horcm101.conf')
 
     - name: Start horcm100
       ansible.builtin.shell: |
-        export HORCM_CONF=/tmp/horcm100.conf; \
-        /HORCM/usr/bin/horcmstart.sh 100; \
-        cat /HORCM/log100/curlog/horcm_*.log
+        export HORCM_CONF=/HORCM/etc/horcm100.conf
+        /HORCM/usr/bin/horcmstart.sh
       register: ret
       failed_when: >
         ("Failed" in ret.stdout) or
@@ -118,8 +117,8 @@
 
     - name: Start horcm101
       ansible.builtin.shell: |
-        export HORCM_CONF=/tmp/horcm101.conf; \
-        /HORCM/usr/bin/horcmstart.sh 101
+        export HORCM_CONF=/HORCM/etc/horcm101.conf
+        /HORCM/usr/bin/horcmstart.sh
       register: ret
       failed_when: >
         (ret.stderr != '') or
