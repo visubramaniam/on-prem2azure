@@ -128,7 +128,7 @@
 
     - name: Login to the storage system
       ansible.builtin.shell: |
-        raidcom -login "{{ vault_storage_username }}" "{{ vault_storage_secret }}" -I100
+        /HORCM/usr/bin/raidcom -login "{{ vault_storage_username }}" "{{ vault_storage_secret }}" -I100
 
 
     - name: Create cloud HUR PAIR
