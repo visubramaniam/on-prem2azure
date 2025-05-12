@@ -3,6 +3,7 @@
 primary_storage_serial: 810396       # Example: 810018
 storage_serial: 810396       # Example: 810018
 storage_address: 192.168.180.12     # Example: storage1.company.com or sds1.company.com or 10.10.10.10
+storage_controller_ip: 192.168.180.13
 vault_storage_username: ansible
 vault_storage_secret: Remote01
 secondary_storage_serial: 840012
