@@ -43,8 +43,11 @@
           storage_controller_show \
           --id "{{ storage_controller_id }}" |\
           grep "^Active" | tr -d " " | cut -d":" -f2 | tr -d "\n"
-      register: active_node_id
-      failed_when: active_node_id.rc != 0
+      register: active_node_id_out
+      failed_when: active_node_id_out.rc != 0
+
+    - ansible.builtin.set_fact:
+        active_node_id: "{{ active_node_id_out.stdout.strip() }}"
 
     - name: Get Active Storage Node ID Control IP
       ansible.builtin.shell: |
@@ -56,8 +59,11 @@
           storage_node_show \
           --id "{{ active_node_id }}" |\
           grep "^Control" | tr -d " " | cut -d":" -f2 | tr -d "\n"
-      register: active_node_ip
-      failed_when: active_node_ip.rc != 0
+      register: active_node_id_out
+      failed_when: active_node_ip_out.rc != 0
+
+    - ansible.builtin.set_fact:
+        active_node_ip: "{{ active_node_ip_out }}"
 
     - name: Check if horcm100 file exists
       ansible.builtin.stat:
