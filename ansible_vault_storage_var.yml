@@ -9,6 +9,7 @@ secondary_storage_serial: 840012
 secondary_storage_address: 192.168.181.12 # Example: storage1.company.com or sds1.company.com or 10.10.10.10
 vault_secondary_storage_username: ansible
 vault_secondary_storage_secret: Remote01
+cloud_storage_serial: 228743
 cloud_storage_address: 172.17.1.28
 cloud_vault_storage_username: admin
 cloud_vault_storage_secret: St0r@g3@DP!

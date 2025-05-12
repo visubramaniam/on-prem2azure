@@ -18,7 +18,7 @@
           --ids "{{ storage_controller_id }}" |\
           grep "^Udp" | tr -d " " | cut -d":" -f2 | tr -d "\n"
       register: udp_port
-      failed when: udp_port.rc != 0
+      failed_when: udp_port.rc != 0
 
     - name: Get Path Group ID for HORCM config file
       ansible.builtin.shell: |
@@ -31,21 +31,59 @@
           ----local_storage_controller_id "{{ storage_controller_id }}" |\
           grep "^Path" | tr -d " " | cut -d":" -f2 | tr -d "\n"
       register: path_grp_id
-      failed when: path_grp_id.rc != 0
+      failed_when: path_grp_id.rc != 0
+
+    - name: Get Active Storage Node ID
+      ansible.builtin.shell: |
+        set -o pipefail
+        hsds --ignore_certificate_errors \
+          --host "{{ cloud_storage_address }}" \
+          --user "{{ cloud_vault_storage_username }}" \
+          --password "{{ cloud_vault_storage_secret }}" \
+          storage_controller_show \
+          --ids "{{ storage_controller_id }}" |\
+          grep "^Active" | tr -d " " | cut -d":" -f2 | tr -d "\n"
+      register: active_node_id
+      failed_when: active_node_id.rc != 0
+
+    - name: Get Active Storage Node ID Control IP
+      ansible.builtin.shell: |
+        set -o pipefail
+        hsds --ignore_certificate_errors \
+          --host "{{ cloud_storage_address }}" \
+          --user "{{ cloud_vault_storage_username }}" \
+          --password "{{ cloud_vault_storage_secret }}" \
+          storage_node_show \
+          --id "{{ active_node_id }}" |\
+          grep "^Control" | tr -d " " | cut -d":" -f2 | tr -d "\n"
+      register: active_node_ip
+      failed_when: active_node_ip.rc != 0
 
     - name: Check if horcm100 file exists
       ansible.builtin.stat:
-        path: /etc/horcm100.conf
+        path: /etc/horcm100.conf.j2
       register: horcm100_file
 
     - name: Check if horcm101 file exists
       ansible.builtin.stat:
-        path: /etc/horcm101.conf
+        path: /etc/horcm101.conf.j2
       register: horcm101_file
 
     - name: Modify horcm100.conf.tmpl
+      ansible.builtin.template:
+        src: /etc/horcm100.conf.j2
+        dest: /etc/horcm100.conf
+        owner: root
+        group: root
+        mode: '0644'
 
     - name: Modify horcm101.conf.tmpl
+      ansible.builtin.template:
+        src: /etc/horcm101.conf.j2
+        dest: /etc/horcm101.conf
+        owner: root
+        group: root
+        mode: '0644'
 
     - name: Start horcm100
       ansible.builtin.shell: "/HORCM/usr/bin/horcmstart.sh 100"
@@ -58,6 +96,7 @@
       until: ret.rc == 0
       retries: 10
       delay: 30
+
     - name: Start horcm101
       ansible.builtin.shell: "/HORCM/usr/bin/horcmstart.sh 101"
       register: ret
@@ -68,24 +107,28 @@
       until: ret.rc == 0
       retries: 10
       delay: 30
+
     - name: Login to the storage system
       ansible.builtin.shell: "/HORCM/usr/bin/raidcom -login ansible Remote01 -I100"
       register: ret
       failed_when: >
         (ret.stderr != '') or
         (ret.rc != 0)
+
     - name: Create cloud HUR PAIR
       ansible.builtin.shell: "/HORCM/usr/bin/paircreate -g TCDEMO -f async 10 -jp 10 -js 10 -vl -I100"
       register: ret
       failed_when: >
         (ret.stderr != '') or
         (ret.rc != 0)
+
     - name: Wait for the pair creation to complete 
       ansible.builtin.shell: "/HORCM/usr/bin/pairevtwait -g TCDEMO -s pair -t 3600 -I100"
       register: ret
       failed_when: >
         (ret.stderr != '') or
         (ret.rc != 0)
+
     - name: Wait for the pair creation to completet HUR PAIR 
       ansible.builtin.shell: "/HORCM/usr/bin/pairsplit -g TCDEMO -rw -I100"
       register: ret
