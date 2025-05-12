@@ -63,7 +63,7 @@
       failed_when: active_node_ip_out.rc != 0
 
     - ansible.builtin.set_fact:
-        active_node_ip: "{{ active_node_ip_outstdout.strip() }}"
+        active_node_ip: "{{ active_node_ip_out.stdout.strip() }}"
 
     - name: Check if horcm100 file exists
       ansible.builtin.stat:
