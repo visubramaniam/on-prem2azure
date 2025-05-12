@@ -128,7 +128,7 @@
 
     - name: Login to the storage system
       ansible.builtin.shell: |
-        /opt/HORCM/usr/bin/raidcom -login ansible Remote01 -I100
+        /opt/HORCM/usr/bin/raidcom -login ansible Remote01 -I100; \
         cat /opt/HORCM/log100/horcc*.log
       register: ret
       failed_when: >
