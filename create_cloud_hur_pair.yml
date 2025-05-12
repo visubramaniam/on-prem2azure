@@ -130,9 +130,6 @@
       ansible.builtin.shell: |
         /opt/HORCM/usr/bin/raidcom -login "{{ vault_storage_username }}" "{{ vault_storage_secret }}" -I100
       register: ret
-      failed_when: >
-        (ret.stderr != '') or
-        (ret.rc != 0)
 
     - name: Create cloud HUR PAIR
       ansible.builtin.shell: "/opt/HORCM/usr/bin/paircreate -g TCDEMO -f async 10 -jp 10 -js 10 -vl -I100"
