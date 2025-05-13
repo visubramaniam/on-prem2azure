@@ -84,26 +84,34 @@
     - name: Modify horcm100.conf.tmpl
       ansible.builtin.template:
         src: /tmp/horcm100.conf.j2
-        dest: /opt/HORCM/etc/horcm100.conf
+        dest: /HORCM/etc/horcm100.conf
         mode: '0777'
 
     - name: Modify horcm101.conf.tmpl
       ansible.builtin.template:
         src: /tmp/horcm101.conf.j2
-        dest: /opt/HORCM/etc/horcm101.conf
+        dest: /HORCM/etc/horcm101.conf
         mode: '0777'
-  
-    - name: Debug horcm100 configuration file
-      ansible.builtin.debug:
-        var: lookup('ansible.builtin.file', '/opt/HORCM/etc/horcm100.conf')
 
-    - name: Debug horcm101 configuration file
+    - name: Display horcm100.conf contents
+      ansible.builtin.shell: cat /HORCM/etc/horcm100.conf
+      register: horcm100_output
+
+    - name: Print to console
       ansible.builtin.debug:
-        var: lookup('ansible.builtin.file', '/opt/HORCM/etc/horcm101.conf')
+        msg: "{{ horcm100_output.stdout_lines }}"
+
+    - name: Display horcm101.conf contents
+      ansible.builtin.shell: cat /HORCM/etc/horcm101.conf
+      register: horcm101_output
+
+    - name: Print to console
+      ansible.builtin.debug:
+        msg: "{{ horcm101_output.stdout_lines }}"
 
     - name: Start horcm100
       ansible.builtin.shell: |
-        /opt/HORCM/usr/bin/horcmstart.sh 100
+        HORCMINST=100 HORCM_CONF=/HORCM/etc/horcm100.conf /HORCM/usr/bin/horcmstart.sh
       register: ret
       failed_when: >
         ("Failed" in ret.stdout) or
@@ -116,7 +124,7 @@
 
     - name: Start horcm101
       ansible.builtin.shell: |
-        /opt/HORCM/usr/bin/horcmstart.sh 101
+        HORCMINST=101 HORCM_CONF=/HORCM/etc/horcm101.conf /HORCM/usr/bin/horcmstart.sh
       register: ret
       failed_when: >
         (ret.stderr != '') or
@@ -132,21 +140,21 @@
 
 
     - name: Create cloud HUR PAIR
-      ansible.builtin.shell: "/opt/HORCM/usr/bin/paircreate -g TCDEMO -f async 10 -jp 10 -js 10 -vl -I100"
+      ansible.builtin.shell: "/HORCM/usr/bin/paircreate -g TCDEMO -f async 10 -jp 10 -js 10 -vl -I100"
       register: ret
       failed_when: >
         (ret.stderr != '') or
         (ret.rc != 0)
 
     - name: Wait for the pair creation to complete 
-      ansible.builtin.shell: "/opt/HORCM/usr/bin/pairevtwait -g TCDEMO -s pair -t 3600 -I100"
+      ansible.builtin.shell: "/HORCM/usr/bin/pairevtwait -g TCDEMO -s pair -t 3600 -I100"
       register: ret
       failed_when: >
         (ret.stderr != '') or
         (ret.rc != 0)
 
     - name: Wait for the pair creation to completet HUR PAIR 
-      ansible.builtin.shell: "/opt/HORCM/usr/bin/pairsplit -g TCDEMO -rw -I100"
+      ansible.builtin.shell: "/HORCM/usr/bin/pairsplit -g TCDEMO -rw -I100"
       register: ret
       failed_when: >
         (ret.stderr != '') or
