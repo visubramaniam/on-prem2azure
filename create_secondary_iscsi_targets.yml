@@ -1,6 +1,6 @@
 ---
 ####################################################################
-# Example : iSCSI Target Playbook
+# Ansible Playbook to create iSCSI targets on Hitachi VSP storage
 ####################################################################
 - name: ISCSI Target Module
   hosts: localhost

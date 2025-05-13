@@ -1,5 +1,5 @@
 ####################################################################
-# Example : Volume Playbook
+# Create a volume in the cloud storage and attach it to a compute node.
 ####################################################################
 - name: Volume Module
   hosts: localhost

@@ -1,6 +1,6 @@
 ---
 ####################################################################
-# Example :  Hitachi Universal Replicator (HUR) Playbook
+# Ansible Playbook to create on-premises HUR pair on Hitachi VSP storage
 ####################################################################
 - name: HUR
   hosts: localhost

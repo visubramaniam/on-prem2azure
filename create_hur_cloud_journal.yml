@@ -1,6 +1,6 @@
 ---
 ####################################################################
-# Example : Cloud HUR Journal Creation
+# Cloud HUR Journal Creation
 ####################################################################
 - name: Create Cloud HUR Journal
   hosts: localhost
