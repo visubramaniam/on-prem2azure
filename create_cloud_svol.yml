@@ -4,6 +4,7 @@
 - name: Volume Module
   hosts: localhost
   gather_facts: false
+  no_log: false
   collections:
     - hitachivantara.vspone_block.sds_block
   vars_files:
