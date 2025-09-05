@@ -1,6 +1,6 @@
 # User will use Ansible Vault to encrypt this file.
 # Ansible will decrypt this file when it executes the playbook.
-primary_storage_serial: 840130
+storage_serial: 840130
 storage_address: 192.168.180.133
 storage_controller_ip: 192.168.180.134
 vault_storage_username: aapuser
