@@ -12,7 +12,7 @@ az_cloud_vault_storage_username: admin
 az_cloud_vault_storage_secret: St0r@g3@DP!
 
 pvol_id: 44
-journal_ldev_id: 45
+journal_ldev_id: 1000
 journal_pool_id: 0
 journal_size: 100GB
 cloud_vol_name: mySQL_HUR_ansibl
