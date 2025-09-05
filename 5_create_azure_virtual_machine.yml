@@ -27,7 +27,7 @@
   tasks:
 
     - name: Create Azure Resource Group
-      azure.azcollection.azure_rm_resourcegroup:
+      azure_rm_resourcegroup:
         name: "{{ resource_group }}"
         location: westeurope
         subscription_id: "{{ azure_subscription_id }}"
@@ -36,13 +36,13 @@
         tenant: "{{ azure_tenant }}"
 
     - name: Create a public IP address
-      azure.azcollection.azure_rm_publicipaddress:
+      azure_rm_publicipaddress:
         resource_group: "{{ resource_group }}"
         name: "{{ public_ip_name }}"
         allocation_method: Static
 
     - name: Create a network interface card (NIC)
-      azure.azcollection.azure_rm_networkinterface:
+      azure_rm_networkinterface:
         resource_group: "{{ resource_group }}"
         name: "{{ nic_name }}"
         virtual_network_name: "{{ network_name }}"
@@ -51,7 +51,7 @@
         network_security_group_name: "{{ nsg_name }}"
 
     - name: Create a Windows virtual machine
-      azure.azcollection.azure_rm_virtualmachine:
+      azure_rm_virtualmachine:
         resource_group: "{{ resource_group }}"
         name: "{{ vm_name }}"
         vm_size: "{{ vm_size }}"
