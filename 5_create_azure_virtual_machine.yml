@@ -5,7 +5,7 @@
   gather_facts: no
 
   vars:
-    resource_group: Hitachi_VSP_SDS_Block
+    resource_group: SQLServerAnalystRG
     location: westeurope
     vm_name: SQLServerAnalyst
     admin_username: azureuser
@@ -19,17 +19,30 @@
     public_ip_name: SQLServerAnalystPublicIP
     nsg_name: CoESDS1180587-Control_nsg
     nic_name: SQLServerAnalystNIC
-
+    azure_subscription_id: "2ffe3392-9c10-4024-b6e1-35addf3ca09b"
+    azure_client_id: "a3bbfe70-bc44-4409-8e27-40f100103752"
+    azure_secret: "FfG8Q~5kqUkvDuUH6VRvwIFdUWBVoHX1VUMHaaPI"
+    azure_tenant: "18791e17-6159-4f52-a8d4-de814ca8284a"
+ 
   tasks:
 
+    - name: Create Azure Resource Group
+      azure.azcollection.azure_rm_resourcegroup:
+        name: "{{ resource_group }}"
+        location: westeurope
+        subscription_id: "{{ azure_subscription_id }}"
+        client_id: "{{ azure_client_id }}"
+        secret: "{{ azure_secret }}"
+        tenant: "{{ azure_tenant }}"
+
     - name: Create a public IP address
-      azure_rm_publicipaddress:
+      azure.azcollection.azure_rm_publicipaddress:
         resource_group: "{{ resource_group }}"
         name: "{{ public_ip_name }}"
         allocation_method: Static
 
     - name: Create a network interface card (NIC)
-      azure_rm_networkinterface:
+      azure.azcollection.azure_rm_networkinterface:
         resource_group: "{{ resource_group }}"
         name: "{{ nic_name }}"
         virtual_network_name: "{{ network_name }}"
@@ -38,7 +51,7 @@
         network_security_group_name: "{{ nsg_name }}"
 
     - name: Create a Windows virtual machine
-      azure_rm_virtualmachine:
+      azure.azcollection.azure_rm_virtualmachine:
         resource_group: "{{ resource_group }}"
         name: "{{ vm_name }}"
         vm_size: "{{ vm_size }}"
