@@ -40,6 +40,10 @@
         resource_group: "{{ resource_group }}"
         name: "{{ public_ip_name }}"
         allocation_method: Static
+        subscription_id: "{{ azure_subscription_id }}"
+        client_id: "{{ azure_client_id }}"
+        secret: "{{ azure_secret }}"
+        tenant: "{{ azure_tenant }}"
 
     - name: Create a network interface card (NIC)
       azure_rm_networkinterface:
@@ -49,6 +53,10 @@
         subnet_name: "{{ subnet_name }}"
         public_ip_address_name: "{{ public_ip_name }}"
         network_security_group_name: "{{ nsg_name }}"
+        subscription_id: "{{ azure_subscription_id }}"
+        client_id: "{{ azure_client_id }}"
+        secret: "{{ azure_secret }}"
+        tenant: "{{ azure_tenant }}"
 
     - name: Create a Windows virtual machine
       azure_rm_virtualmachine:
@@ -57,6 +65,10 @@
         vm_size: "{{ vm_size }}"
         admin_username: "{{ admin_username }}"
         admin_password: "{{ admin_password }}"
+        subscription_id: "{{ azure_subscription_id }}"
+        client_id: "{{ azure_client_id }}"
+        secret: "{{ azure_secret }}"
+        tenant: "{{ azure_tenant }}"
         image:
           publisher: "{{ image_publisher }}"
           offer: "{{ image_offer }}"
