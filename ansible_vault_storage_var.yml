@@ -1,45 +1,27 @@
 # User will use Ansible Vault to encrypt this file.
 # Ansible will decrypt this file when it executes the playbook.
-primary_storage_serial: 810396
-storage_serial: 810396
-storage_address: 192.168.180.12
-storage_controller_ip: 192.168.180.13
-vault_storage_username: ansible
-vault_storage_secret: Remote01
-secondary_storage_serial: 840012
-secondary_storage_address: 192.168.181.12
-vault_secondary_storage_username: ansible
-vault_secondary_storage_secret: Remote01
-cloud_storage_serial: 228743
-cloud_storage_address: 172.17.1.28
-cloud_vault_storage_username: admin
-cloud_vault_storage_secret: Hitachi123!
-port1_name: CL2-D
-port2_name: CL4-D
-port1_iqn: iqn.1993-08.org.debian.iscsi:01:107dc7e4254a
-port2_iqn: iqn.1993-08.org.debian.iscsi:01:107dc7e4254b
-target_name: mySQL_HUR_ansibl
-copy_group_name: PRODUCTION
-copy_pair_name: PRODUCTION_1
-pvol_id: 952
-pvol_jnl_id: 7
-svol_jnl_id: 7
-secondary_pool_id: 1
-local_device_group_name: PRODUCTION_PVOL_
-remote_device_group_name: PRODUCTION_SVOL_
-consistency_group_id: 7
-mirror_unit_id: 1
-lun_id: 0
-path_group_id: 0
-si_cp_grp_name: PRODUCTION_SI
-si_cp_pair_name: PRODUCTION_SI_01
-si_pvol_dev_grp_name: PRODUCTION_SI_P_
-si_svol_dev_grp_name: PRODUCTION_SI_S_
+primary_storage_serial: 840130
+storage_address: 192.168.180.133
+storage_controller_ip: 192.168.180.134
+vault_storage_username: aapuser
+vault_storage_secret: Remote02
+
+az_cloud_storage_serial: 210345
+az_cloud_storage_address: 172.18.1.10
+az_cloud_vault_storage_username: admin
+az_cloud_vault_storage_secret: St0r@g3@DP!
+
+pvol_id: 44
+journal_ldev_id: 45
+journal_pool_id: 0
+journal_size: 100GB
 cloud_vol_name: mySQL_HUR_ansibl
 cloud_vol_capacity: 100GB
 cloud_pool_name: StoragePool01
-cloud_compute_node_name: mysql-hur
-cloud_journal_number: 10
-onprem_journal_number: 10
+cloud_compute_node_name: SQLServer
+cloud_journal_number: 30
+onprem_journal_number: 30
+ctg_group_id: 30
 cloud_journal_name: mySQL_HUR_ansibl_JNL
 
+HORCM_GROUP_NAME: azhurgrp

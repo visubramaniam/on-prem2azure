@@ -13,9 +13,9 @@
   vars:
     # Common connection info for all tasks
     connection_info:
-      address: "{{ cloud_storage_address }}"
-      username: "{{ cloud_vault_storage_username }}"
-      password: "{{ cloud_vault_storage_secret}}"
+      address: "{{ az_cloud_storage_address }}"
+      username: "{{ az_cloud_vault_storage_username }}"
+      password: "{{ az_cloud_vault_storage_secret}}"
   tasks:
     ####################################################################
     # Task 1 : Create volume
@@ -37,7 +37,7 @@
     - name: Set Volume Number for workflow
       set_stats:
         data:
-          cloud_svol_id: "{{ result.data.volume_number }}"
+          az_svol_ldev_id: "{{ result.data.volume_number }}"
     - name: Set Storage Controller ID for workflow
       set_stats:
         data:

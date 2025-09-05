@@ -21,7 +21,7 @@
       failed_when: udp_port_out.rc != 0
 
     - ansible.builtin.set_fact:
-        udp_port: "{{ udp_port_out.stdout.strip() }}"
+        az_udp_port: "{{ udp_port_out.stdout.strip() }}"
 
     - name: Get Path Group ID for HORCM config file
       ansible.builtin.shell: |
@@ -37,7 +37,7 @@
       failed_when: path_grp_id_out.rc != 0
 
     - ansible.builtin.set_fact:
-        path_grp_id: "{{ path_grp_id_out.stdout.strip() }}"
+        az_path_grp_id: "{{ path_grp_id_out.stdout.strip() }}"
 
     - name: Get Active Storage Node ID
       ansible.builtin.shell: |
@@ -69,7 +69,7 @@
       failed_when: active_node_ip_out.rc != 0
 
     - ansible.builtin.set_fact:
-        active_node_ip: "{{ active_node_ip_out.stdout.strip() }}"
+        az_active_node_ip: "{{ active_node_ip_out.stdout.strip() }}"
 
     - name: Check if horcm100 file exists
       ansible.builtin.stat:
@@ -140,21 +140,21 @@
 
 
     - name: Create cloud HUR PAIR
-      ansible.builtin.shell: "/HORCM/usr/bin/paircreate -g TCDEMO -f async 10 -jp 10 -js 10 -vl -I100"
+      ansible.builtin.shell: /HORCM/usr/bin/paircreate -g "{{ HORCM_GROUP_NAME }}" -f async "{{ ctg_group_id }}" -jp "{{ onprem_journal_number }}" -js "{{ cloud_journal_number }}" -vl -I100
       register: ret
       failed_when: >
         (ret.stderr != '') or
         (ret.rc != 0)
 
     - name: Wait for the pair creation to complete 
-      ansible.builtin.shell: "/HORCM/usr/bin/pairevtwait -g TCDEMO -s pair -t 3600 -I100"
+      ansible.builtin.shell: /HORCM/usr/bin/pairevtwait -g "{{ HORCM_GROUP_NAME }}" -s pair -t 3600 -I100
       register: ret
       failed_when: >
         (ret.stderr != '') or
         (ret.rc != 0)
 
     - name: Wait for the pair creation to completet HUR PAIR 
-      ansible.builtin.shell: "/HORCM/usr/bin/pairsplit -g TCDEMO -rw -I100"
+      ansible.builtin.shell: /HORCM/usr/bin/pairsplit -g "{{ HORCM_GROUP_NAME }}" -rw -I100
       register: ret
       failed_when: >
         (ret.stderr != '') or

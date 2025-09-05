@@ -42,7 +42,7 @@
         connection_info: "{{ connection_info }}"
         state: "present"
         spec:
-          journal_id: "{{ onprem_journal_id }}"
+          journal_id: "{{ onprem_journal_number }}"
           ldev_ids: ["{{ journal_ldev_id }}"]
       register: result
 
