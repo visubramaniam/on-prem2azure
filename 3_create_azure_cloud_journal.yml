@@ -80,7 +80,4 @@
           --journal_number "{{ cloud_journal_number }}"
       when: command_output.rc !=0
       register: command_output
-
-    - name: Echo command output
-      ansible.builtin.debug:
-        msg: "{{ command_output.stdout.strip() }}"
+      
