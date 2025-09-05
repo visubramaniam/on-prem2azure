@@ -139,7 +139,7 @@
         /HORCM/usr/bin/raidcom -login "{{ vault_storage_username }}" "{{ vault_storage_secret }}" -I100
 
     - name: Check PAIR status
-      ansible.builtin.shell: /HORCM/usr/bin/pairvolchk -g "{{ HORCM_GROUP_NAME }}" -ss -I100
+      ansible.builtin.shell: /HORCM/usr/bin/pairvolchk -g "{{ HORCM_GROUP_NAME }}" -ss -I100 2> /dev/null
       ignore_errors: true
       register: command_status
 

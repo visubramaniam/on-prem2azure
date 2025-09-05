@@ -15,7 +15,7 @@
           --user "{{ az_cloud_vault_storage_username }}" \
           --password "{{ az_cloud_vault_storage_secret }}" \
           volume_show \
-          --id_name "{{ cloud_journal_name }}"
+          --id_name "{{ cloud_journal_name }}" 2> /dev/null
       ignore_errors: true
       register: command_result
 
@@ -34,9 +34,6 @@
           grep -i "^Job" | tr -d " " | cut -d":" -f2 | tr -d "\n"
       when: command_result.rc != 0
       register: job_id
-
-    - ansible.builtin.set_fact:
-        job_id_out: "{{ job_id.stdout.strip() }}"
 
     - name: Get Journal Volume ID
       ansible.builtin.shell: |
@@ -67,7 +64,7 @@
           --user "{{ az_cloud_vault_storage_username }}" \
           --password "{{ az_cloud_vault_storage_secret }}" \
           journal_show \
-          --journal_number "{{ cloud_journal_number }}"
+          --journal_number "{{ cloud_journal_number }}" 2> /dev/null
       ignore_errors: true
       register: command_output
 
