@@ -15,13 +15,13 @@ pvol_id: 44
 journal_ldev_id: 1000
 journal_pool_id: 0
 journal_size: 100GB
-cloud_vol_name: mySQL_HUR_ansibl
+cloud_vol_name: SQLServer_HUR_SVOL
 cloud_vol_capacity: 100GB
 cloud_pool_name: StoragePool01
 cloud_compute_node_name: SQLServer
 cloud_journal_number: 30
 onprem_journal_number: 30
 ctg_group_id: 30
-cloud_journal_name: mySQL_HUR_ansibl_JNL
+cloud_journal_name: SQLServer_HUR_JNL
 
 HORCM_GROUP_NAME: azhurgrp
