@@ -16,9 +16,9 @@
       ansible.builtin.shell: |
         set -o pipefail
         hsds --ignore_certificate_errors \
-          --host "{{ cloud_storage_address }}" \
-          --user "{{ cloud_vault_storage_username }}" \
-          --password "{{ cloud_vault_storage_secret }}" \
+          --host "{{ az_cloud_storage_address }}" \
+          --user "{{ az_cloud_vault_storage_username }}" \
+          --password "{{ az_cloud_vault_storage_secret }}" \
           volume_create \
           --base_name_for_name "{{ cloud_journal_name }}" \
           --storage_controller_id "{{ storage_controller_id }}" \
@@ -41,9 +41,9 @@
       ansible.builtin.shell: |
         set -o pipefail
         hsds --ignore_certificate_errors \
-          --host "{{ cloud_storage_address }}" \
-          --user "{{ cloud_vault_storage_username }}" \
-          --password "{{ cloud_vault_storage_secret }}" \
+          --host "{{ az_cloud_storage_address }}" \
+          --user "{{ az_cloud_vault_storage_username }}" \
+          --password "{{ az_cloud_vault_storage_secret }}" \
           job_list \
           --ids "{{ job_id_out }}" |\
           grep "Value" | tr -d " " | cut -d":" -f2 | tr -d "\n"
@@ -67,9 +67,9 @@
       ansible.builtin.shell: |
         set -o pipefail
         hsds --ignore_certificate_errors \
-          --host "{{ cloud_storage_address }}" \
-          --user "{{ cloud_vault_storage_username }}" \
-          --password "{{ cloud_vault_storage_secret }}" \
+          --host "{{ az_cloud_storage_address }}" \
+          --user "{{ az_cloud_vault_storage_username }}" \
+          --password "{{ az_cloud_vault_storage_secret }}" \
           journal_create \
           --volume_ids "{{ volume_id_out }}" \
           --journal_number "{{ cloud_journal_number }}"
