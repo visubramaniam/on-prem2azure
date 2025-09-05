@@ -16,6 +16,7 @@
           --password "{{ az_cloud_vault_storage_secret }}" \
           volume_show \
           --id_name "{{ cloud_journal_name }}"
+      ignore_errors: true
       register: command_result
 
     - name: Create Journal Volume and get Job ID
@@ -71,7 +72,7 @@
           --password "{{ az_cloud_vault_storage_secret }}" \
           journal_show \
           --journal_number "{{ cloud_journal_number }}"
-      when: not journal_created.stat.exists
+      ignore_errors: true
       register: command_output
 
     - name: Create Journal

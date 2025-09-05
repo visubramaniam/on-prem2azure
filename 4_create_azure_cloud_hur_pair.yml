@@ -140,6 +140,7 @@
 
     - name: Check PAIR status
       ansible.builtin.shell: /HORCM/usr/bin/pairvolchk -g "{{ HORCM_GROUP_NAME }}" -ss -I100
+      ignore_errors: true
       register: command_status
 
     - name: Create cloud HUR PAIR
