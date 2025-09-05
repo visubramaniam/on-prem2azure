@@ -35,10 +35,6 @@
       when: command_result.rc != 0
       register: job_id
 
-    - name: Echo job_id
-      ansible.builtin.debug:
-        msg: "{{ job_id.stdout }}"
-
     - ansible.builtin.set_fact:
         job_id_out: "{{ job_id.stdout.strip() }}"
 
