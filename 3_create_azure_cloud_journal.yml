@@ -7,10 +7,16 @@
   vars_files:
     - ansible_vault_storage_var.yml
   tasks:
-    - name: Check if journal volume creation file exists
-      ansible.builtin.stat:
-        path: /tmp/journal_volume_created
-      register: journal_volume_file
+    - name: Check if Journal Volume exists
+      ansible.builtin.shell: |
+        set -o pipefail
+        hsds --ignore_certificate_errors \
+          --host "{{ az_cloud_storage_address }}" \
+          --user "{{ az_cloud_vault_storage_username }}" \
+          --password "{{ az_cloud_vault_storage_secret }}" \
+          volume_show \
+          --id_name "{{ cloud_journal_name }}"
+      register: command_result
 
     - name: Create Journal Volume and get Job ID
       ansible.builtin.shell: |
@@ -25,10 +31,8 @@
           --capacity 102400 \
           --pool_id_name "{{ cloud_pool_name }}" | \
           grep -i "^Job" | tr -d " " | cut -d":" -f2 | tr -d "\n"
-      when: not journal_volume_file.stat.exists
+      when: command_result.rc != 0
       register: job_id
-      args:
-        creates: /tmp/journal_volume_created
 
     - name: Echo job_id
       ansible.builtin.debug:
@@ -44,9 +48,9 @@
           --host "{{ az_cloud_storage_address }}" \
           --user "{{ az_cloud_vault_storage_username }}" \
           --password "{{ az_cloud_vault_storage_secret }}" \
-          job_list \
-          --ids "{{ job_id_out }}" |\
-          grep "Value" | tr -d " " | cut -d":" -f2 | tr -d "\n"
+          volume_show \
+          --id_name "{{ cloud_journal_name }}" |\
+          grep "^Id:" | tr -d " " | cut -d":" -f2 | tr -d "\n"
       register: volume_id
       until: volume_id.rc == 0
       retries: 10
@@ -58,10 +62,17 @@
     - ansible.builtin.set_fact:
         volume_id_out: "{{ volume_id.stdout.strip() }}"
 
-    - name: Check if journal creation file exists
-      ansible.builtin.stat:
-        path: /tmp/journal_created
-      register: journal_created
+    - name: Check if Journal already exists
+      ansible.builtin.shell: |
+        set -o pipefail
+        hsds --ignore_certificate_errors \
+          --host "{{ az_cloud_storage_address }}" \
+          --user "{{ az_cloud_vault_storage_username }}" \
+          --password "{{ az_cloud_vault_storage_secret }}" \
+          journal_show \
+          --journal_number "{{ cloud_journal_number }}"
+      when: not journal_created.stat.exists
+      register: command_output
 
     - name: Create Journal
       ansible.builtin.shell: |
@@ -73,10 +84,8 @@
           journal_create \
           --volume_ids "{{ volume_id_out }}" \
           --journal_number "{{ cloud_journal_number }}"
-      when: not journal_created.stat.exists
+      when: command_output.rc !=0
       register: command_output
-      args:
-        creates: /tmp/journal_created
 
     - name: Echo command output
       ansible.builtin.debug:

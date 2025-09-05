@@ -138,13 +138,18 @@
       ansible.builtin.shell: |
         /HORCM/usr/bin/raidcom -login "{{ vault_storage_username }}" "{{ vault_storage_secret }}" -I100
 
+    - name: Check PAIR status
+      ansible.builtin.shell: /HORCM/usr/bin/pairvolchk -g "{{ HORCM_GROUP_NAME }}" -ss -I100
+      register: command_status
 
     - name: Create cloud HUR PAIR
       ansible.builtin.shell: /HORCM/usr/bin/paircreate -g "{{ HORCM_GROUP_NAME }}" -f async "{{ ctg_group_id }}" -jp "{{ onprem_journal_number }}" -js "{{ cloud_journal_number }}" -vl -I100
-      register: ret
-      failed_when: >
-        (ret.stderr != '') or
-        (ret.rc != 0)
+      when: command_status.rc == 11
+
+    - name: Resync PAIR if already exists
+      ansible.builtin.shell: /HORCM/usr/bin/pairresync -g "{{ HORCM_GROUP_NAME }}" -I100
+      when: command_status.rc == 44
+
 
     - name: Wait for the pair creation to complete 
       ansible.builtin.shell: /HORCM/usr/bin/pairevtwait -g "{{ HORCM_GROUP_NAME }}" -s pair -t 3600 -I100
@@ -153,7 +158,7 @@
         (ret.stderr != '') or
         (ret.rc != 0)
 
-    - name: Wait for the pair creation to completet HUR PAIR 
+    - name: Wait for the pair creation to complete HUR PAIR 
       ansible.builtin.shell: /HORCM/usr/bin/pairsplit -g "{{ HORCM_GROUP_NAME }}" -rw -I100
       register: ret
       failed_when: >
