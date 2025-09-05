@@ -11,9 +11,9 @@
       ansible.builtin.shell: |
         set -o pipefail
         hsds --ignore_certificate_errors \
-          --host "{{ cloud_storage_address }}" \
-          --user "{{ cloud_vault_storage_username }}" \
-          --password "{{ cloud_vault_storage_secret }}" \
+          --host "{{ az_cloud_storage_address }}" \
+          --user "{{ az_cloud_vault_storage_username }}" \
+          --password "{{ az_cloud_vault_storage_secret }}" \
           storage_controller_show \
           --id "{{ storage_controller_id }}" |\
           grep "^Udp" | tr -d " " | cut -d":" -f2 | tr -d "\n"
@@ -27,9 +27,9 @@
       ansible.builtin.shell: |
         set -o pipefail
         hsds --ignore_certificate_errors \
-          --host "{{ cloud_storage_address }}" \
-          --user "{{ cloud_vault_storage_username }}" \
-          --password "{{ cloud_vault_storage_secret }}" \
+          --host "{{ az_cloud_storage_address }}" \
+          --user "{{ az_cloud_vault_storage_username }}" \
+          --password "{{ az_cloud_vault_storage_secret }}" \
           remotepath_group_list \
           --local_storage_controller_id "{{ storage_controller_id }}" |\
           grep "^Path" | tr -d " " | cut -d":" -f2 | tr -d "\n"
@@ -43,9 +43,9 @@
       ansible.builtin.shell: |
         set -o pipefail
         hsds --ignore_certificate_errors \
-          --host "{{ cloud_storage_address }}" \
-          --user "{{ cloud_vault_storage_username }}" \
-          --password "{{ cloud_vault_storage_secret }}" \
+          --host "{{ az_cloud_storage_address }}" \
+          --user "{{ az_cloud_vault_storage_username }}" \
+          --password "{{ az_cloud_vault_storage_secret }}" \
           storage_controller_show \
           --id "{{ storage_controller_id }}" |\
           grep "^Active" | tr -d " " | cut -d":" -f2 | tr -d "\n"
@@ -59,9 +59,9 @@
       ansible.builtin.shell: |
         set -o pipefail
         hsds --ignore_certificate_errors \
-          --host "{{ cloud_storage_address }}" \
-          --user "{{ cloud_vault_storage_username }}" \
-          --password "{{ cloud_vault_storage_secret }}" \
+          --host "{{ az_cloud_storage_address }}" \
+          --user "{{ az_cloud_vault_storage_username }}" \
+          --password "{{ az_cloud_vault_storage_secret }}" \
           storage_node_show \
           --id "{{ active_node_id }}" |\
           grep "^Control" | tr -d " " | cut -d":" -f2 | tr -d "\n"
