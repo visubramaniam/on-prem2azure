@@ -51,7 +51,6 @@
         resource_group: "{{ resource_group }}"
         location: westeurope
         virtual_network_name: "{{ network_name }}"
-        name: "{{ nic_name }}"
         subnet_name: "{{ subnet_name }}"
         security_group_name: "{{ nsg_name }}"
         subscription_id: "{{ azure_subscription_id }}"
