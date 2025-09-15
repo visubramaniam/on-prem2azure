@@ -48,7 +48,6 @@
     - name: Create a network interface card (NIC)
       azure_rm_networkinterface:
         resource_group: "{{ resource_group }}"
-        name: "{{ nic_name }}"
         virtual_network_name: "{{ network_name }}"
         subnet_name: "{{ subnet_name }}"
         security_group_name: "{{ nsg_name }}"
@@ -56,6 +55,10 @@
         client_id: "{{ azure_client_id }}"
         secret: "{{ azure_secret }}"
         tenant: "{{ azure_tenant }}"
+        ip_configurations:
+          - name: ipconfig1
+            public_ip_address_name: "{{ public_ip_name }}"
+            primary: true
 
     - name: Create a Windows virtual machine
       azure_rm_virtualmachine:
